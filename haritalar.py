@@ -1,8 +1,7 @@
 import pygame
 import sys
-import physics_engine
-import objects
-import interface
+import katmanlar
+import gorunurluk
 
 pygame.init()
 width = None
@@ -19,7 +18,7 @@ def init(screen):
     display = screen
     (width, height) = display.get_rect().size
     height -= ground
-    interface.init(display)
+    gorunurluk.init(display)
 
 def all_rest(pigs, birds, blocks):
     threshold = 0.15
@@ -44,7 +43,7 @@ def close():
 class Maps:
     def __init__(self):
         self.level = 1
-        self.max_level = 15
+        self.max_level = 3
         self.color = {'background': (51, 51, 51)}
         self.score = 0
 
@@ -71,19 +70,19 @@ class Maps:
             return False
 
     def pause(self):
-        pause_text = interface.Label(700, 200, 400, 200, None, self.color['background'])
+        pause_text = gorunurluk.Label(700, 200, 400, 200, None, self.color['background'])
         pause_text.add_text("GAME PAUSED", 70, "Fonts/Comic_Kings.ttf", (236, 240, 241))
 
-        replay = interface.Button(350, 500, 300, 100, self.draw_map, (244, 208, 63), (247, 220, 111))
+        replay = gorunurluk.Button(350, 500, 300, 100, self.draw_map, (244, 208, 63), (247, 220, 111))
         replay.add_text("RESTART", 60, "Fonts/arfmoochikncheez.ttf", self.color['background'])
 
-        resume = interface.Button(750, 500, 300, 100, None, (88, 214, 141), (171, 235, 198))
+        resume = gorunurluk.Button(750, 500, 300, 100, None, (88, 214, 141), (171, 235, 198))
         resume.add_text("RESUME", 60, "Fonts/arfmoochikncheez.ttf", self.color['background'])
 
-        exit = interface.Button(1150, 500, 300, 100, close, (241, 148, 138), (245, 183, 177))
+        exit = gorunurluk.Button(1150, 500, 300, 100, close, (241, 148, 138), (245, 183, 177))
         exit.add_text("QUIT", 60, "Fonts/arfmoochikncheez.ttf", self.color['background'])
 
-        mandav = interface.Label(width - 270, height + ground - 70, 300, 100, None, self.color['background'])
+        mandav = gorunurluk.Label(width - 270, height + ground - 70, 300, 100, None, self.color['background'])
         mandav.add_text("MANDAV", 60, "Fonts/arfmoochikncheez.ttf", ( 113, 125, 126 ))
 
         while True:
@@ -124,38 +123,38 @@ class Maps:
 
         if self.level == 1:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
+                new_bird = katmanlar.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(1100, height - 40, 20))
-            pigs.append(physics_engine.Pig(1500, height - 40, 20))
+            pigs.append(katmanlar.Pig(1100, height - 40, 20))
+            pigs.append(katmanlar.Pig(1500, height - 40, 20))
 
-            blocks.append(physics_engine.Block(1300, height - 60, 60))
+            blocks.append(katmanlar.Block(1300, height - 60, 60))
 
         elif self.level == 2:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
+                new_bird = katmanlar.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(1000, height - 40, 20))
-            pigs.append(physics_engine.Pig(1400, height - 40, 20))
+            pigs.append(katmanlar.Pig(1000, height - 40, 20))
+            pigs.append(katmanlar.Pig(1400, height - 40, 20))
 
-            blocks.append(physics_engine.Block(1200, height - 60, 60))
-            blocks.append(physics_engine.Block(1200, height - 2*35, 60))
-            blocks.append(physics_engine.Block(1500, height - 60, 60))
+            blocks.append(katmanlar.Block(1200, height - 60, 60))
+            blocks.append(katmanlar.Block(1200, height - 2*35, 60))
+            blocks.append(katmanlar.Block(1500, height - 60, 60))
 
         elif self.level == 3:
             for i in range(3):
-                new_bird = physics_engine.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
+                new_bird = katmanlar.Bird(40*i + 5*i, height - 40, 20, None, "BIRD")
                 birds.append(new_bird)
 
-            pigs.append(physics_engine.Pig(1200, height - 60, 30))
-            pigs.append(physics_engine.Pig(1300, height - 60, 30))
+            pigs.append(katmanlar.Pig(1200, height - 60, 30))
+            pigs.append(katmanlar.Pig(1300, height - 60, 30))
 
-            blocks.append(physics_engine.Block(1000, height - 100, 100))
-            blocks.append(physics_engine.Block(1000, height - 2*60, 100))
-            blocks.append(physics_engine.Block(1500, height - 100, 100))
-            blocks.append(physics_engine.Block(1500, height - 2*60, 100))
+            blocks.append(katmanlar.Block(1000, height - 100, 100))
+            blocks.append(katmanlar.Block(1000, height - 2*60, 100))
+            blocks.append(katmanlar.Block(1500, height - 100, 100))
+            blocks.append(katmanlar.Block(1500, height - 2*60, 100))
 
         self.start_level(birds, pigs, blocks, walls)
 
@@ -170,29 +169,29 @@ class Maps:
     def level_cleared(self):
         self.level += 1
 
-        level_cleared_text = interface.Label(700, 100, 400, 200, None, self.color['background'])
+        level_cleared_text = gorunurluk.Label(700, 100, 400, 200, None, self.color['background'])
         if self.level <= self.max_level:
             level_cleared_text.add_text("LEVEL " + str(self.level - 1) + " CLEARED!", 80, "Fonts/Comic_Kings.ttf", (236, 240, 241))
         else:
             level_cleared_text.add_text("ALL LEVEL CLEARED!", 80, "Fonts/Comic_Kings.ttf", (236, 240, 241))
 
-        score_text = interface.Label(750, 300, 300, 100, None, self.color['background'])
+        score_text = gorunurluk.Label(750, 300, 300, 100, None, self.color['background'])
         score_text.add_text("SCORE: " + str(self.score), 55, "Fonts/Comic_Kings.ttf", (236, 240, 241))
 
-        replay = interface.Button(350, 500, 300, 100, self.replay_level, (244, 208, 63), (247, 220, 111))
+        replay = gorunurluk.Button(350, 500, 300, 100, self.replay_level, (244, 208, 63), (247, 220, 111))
         replay.add_text("PLAY AGAIN", 60, "Fonts/arfmoochikncheez.ttf", self.color['background'])
 
         if self.level <= self.max_level:
-            next = interface.Button(750, 500, 300, 100, self.draw_map, (88, 214, 141), (171, 235, 198))
+            next = gorunurluk.Button(750, 500, 300, 100, self.draw_map, (88, 214, 141), (171, 235, 198))
             next.add_text("CONTINUE", 60, "Fonts/arfmoochikncheez.ttf", self.color['background'])
         else:
-            next = interface.Button(750, 500, 300, 100, self.start_again, (88, 214, 141), (171, 235, 198))
+            next = gorunurluk.Button(750, 500, 300, 100, self.start_again, (88, 214, 141), (171, 235, 198))
             next.add_text("START AGAIN", 60, "Fonts/arfmoochikncheez.ttf", self.color['background'])
 
-        exit = interface.Button(1150, 500, 300, 100, close, (241, 148, 138), (245, 183, 177))
+        exit = gorunurluk.Button(1150, 500, 300, 100, close, (241, 148, 138), (245, 183, 177))
         exit.add_text("QUIT", 60, "Fonts/arfmoochikncheez.ttf", self.color['background'])
 
-        mandav = interface.Label(width - 270, height + ground - 70, 300, 100, None, self.color['background'])
+        mandav = gorunurluk.Label(width - 270, height + ground - 70, 300, 100, None, self.color['background'])
         mandav.add_text("MANDAV", 60, "Fonts/arfmoochikncheez.ttf", ( 113, 125, 126 ))
 
         while True:
@@ -222,19 +221,19 @@ class Maps:
             clock.tick(60)
 
     def level_failed(self):
-        level_failed_text = interface.Label(700, 100, 400, 200, None, self.color['background'])
+        level_failed_text = gorunurluk.Label(700, 100, 400, 200, None, self.color['background'])
         level_failed_text.add_text("LEVEL FAILED!", 80, "Fonts/Comic_Kings.ttf", (236, 240, 241))
 
-        score_text = interface.Label(750, 300, 300, 100, None, self.color['background'])
+        score_text = gorunurluk.Label(750, 300, 300, 100, None, self.color['background'])
         score_text.add_text("SCORE: " + str(self.score), 55, "Fonts/Comic_Kings.ttf", (236, 240, 241))
 
-        replay = interface.Button(500, 500, 300, 100, self.draw_map, (244, 208, 63), (247, 220, 111))
+        replay = gorunurluk.Button(500, 500, 300, 100, self.draw_map, (244, 208, 63), (247, 220, 111))
         replay.add_text("TRY AGAIN", 60, "Fonts/arfmoochikncheez.ttf", self.color['background'])
 
-        exit = interface.Button(1000, 500, 300, 100, close, (241, 148, 138), (245, 183, 177))
+        exit = gorunurluk.Button(1000, 500, 300, 100, close, (241, 148, 138), (245, 183, 177))
         exit.add_text("QUIT", 60, "Fonts/arfmoochikncheez.ttf", self.color['background'])
 
-        mandav = interface.Label(width - 270, height + ground - 70, 300, 100, None, self.color['background'])
+        mandav = gorunurluk.Label(width - 270, height + ground - 70, 300, 100, None, self.color['background'])
         mandav.add_text("MANDAV", 60, "Fonts/arfmoochikncheez.ttf", ( 113, 125, 126 ))
 
         while True:
@@ -263,7 +262,7 @@ class Maps:
     def start_level(self, birds, pigs, blocks, walls):
         loop = True
 
-        slingshot = physics_engine.Slingshot(200, height - 200, 30, 200)
+        slingshot = katmanlar.Slingshot(200, height - 200, 30, 200)
 
         birds[0].load(slingshot)
 
@@ -273,16 +272,16 @@ class Maps:
         pigs_to_remove = []
         blocks_to_remove = []
 
-        score_text = interface.Label(50, 10, 100, 50, None, self.color['background'])
+        score_text = gorunurluk.Label(50, 10, 100, 50, None, self.color['background'])
         score_text.add_text("SCORE: " + str(self.score), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
 
-        birds_remaining = interface.Label(120, 50, 100, 50, None, self.color['background'])
+        birds_remaining = gorunurluk.Label(120, 50, 100, 50, None, self.color['background'])
         birds_remaining.add_text("BIRDS REMAINING: " + str(len(birds)), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
 
-        pigs_remaining = interface.Label(110, 90, 100, 50, None, self.color['background'])
+        pigs_remaining = gorunurluk.Label(110, 90, 100, 50, None, self.color['background'])
         pigs_remaining.add_text("PIGS REMAINING: " + str(len(pigs)), 25, "Fonts/Comic_Kings.ttf", (236, 240, 241))
 
-        mandav = interface.Label(width - 270, height + ground - 70, 300, 100, None, self.color['background'])
+        mandav = gorunurluk.Label(width - 270, height + ground - 70, 300, 100, None, self.color['background'])
         mandav.add_text("MANDAV", 60, "Fonts/arfmoochikncheez.ttf", ( 113, 125, 126 ))
 
         while loop:
@@ -340,7 +339,7 @@ class Maps:
             for i in range(len(pigs)):
                 for j in range(len(blocks)):
                     pig_v, block_v = pigs[i].velocity.magnitude, blocks[j].velocity.magnitude
-                    pigs[i], blocks[j], result_block_pig = physics_engine.collision_handler(pigs[i], blocks[j], "BALL_N_BLOCK")
+                    pigs[i], blocks[j], result_block_pig = katmanlar.collision_handler(pigs[i], blocks[j], "BALL_N_BLOCK")
                     pig_v1, block_v1 = pigs[i].velocity.magnitude, blocks[j].velocity.magnitude
 
                     if result_block_pig:
@@ -355,7 +354,7 @@ class Maps:
                 if not (birds[i].loaded or birds[i].velocity.magnitude == 0):
                     for j in range(len(blocks)):
                         birds_v, block_v = birds[i].velocity.magnitude, blocks[j].velocity.magnitude
-                        birds[i], blocks[j], result_bird_block = physics_engine.collision_handler(birds[i], blocks[j], "BALL_N_BLOCK")
+                        birds[i], blocks[j], result_bird_block = katmanlar.collision_handler(birds[i], blocks[j], "BALL_N_BLOCK")
                         birds_v1, block_v1 = birds[i].velocity.magnitude, blocks[j].velocity.magnitude
 
                         if result_bird_block:
@@ -368,7 +367,7 @@ class Maps:
                 pigs[i].move()
                 for j in range(i+1, len(pigs)):
                     pig1_v, pig2_v = pigs[i].velocity.magnitude, pigs[j].velocity.magnitude
-                    pigs[i], pigs[j], result = physics_engine.collision_handler(pigs[i], pigs[j], "BALL")
+                    pigs[i], pigs[j], result = katmanlar.collision_handler(pigs[i], pigs[j], "BALL")
                     pig1_v1, pig2_v1 = pigs[i].velocity.magnitude, pigs[j].velocity.magnitude
                     result = True
                     if result:
@@ -391,7 +390,7 @@ class Maps:
                     birds[0].move()
                     for j in range(len(pigs)):
                         bird_v, pig_v = birds[i].velocity.magnitude, pigs[j].velocity.magnitude
-                        birds[i], pigs[j], result_bird_pig = physics_engine.collision_handler(birds[i], pigs[j], "BALL")
+                        birds[i], pigs[j], result_bird_pig = katmanlar.collision_handler(birds[i], pigs[j], "BALL")
                         bird_v1, pig_v1 = birds[i].velocity.magnitude, pigs[j].velocity.magnitude
                         result = True
                         if result_bird_pig:
@@ -411,7 +410,7 @@ class Maps:
             for i in range(len(blocks)):
                 for j in range(i + 1, len(blocks)):
                     block1_v, block2_v = blocks[i].velocity.magnitude, blocks[j].velocity.magnitude
-                    blocks[i], blocks[j], result_block = physics_engine.block_collision_handler(blocks[i], blocks[j])
+                    blocks[i], blocks[j], result_block = katmanlar.block_collision_handler(blocks[i], blocks[j])
                     block1_v1, block2_v1 = blocks[i].velocity.magnitude, blocks[j].velocity.magnitude
 
                     if result_block:

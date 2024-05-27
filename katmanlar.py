@@ -1,4 +1,3 @@
-
 import pygame
 from math import *
 import random
@@ -13,7 +12,6 @@ width = 0
 height = 0
 display = 0
 ground = 50
-
 
 def init(screen):
     global width, height, display
