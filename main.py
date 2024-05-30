@@ -1,9 +1,8 @@
-import pygame
-import sys
-from math import *
 from OpenGL.GL import *
 from OpenGL.GLU import *
 from OpenGL.GLUT import *
+import pygame
+import sys
 import katmanlar
 import nesneler
 import haritalar
@@ -41,8 +40,8 @@ def GAME():
     exit = gorunurluk.Button(1000, 400, 300, 100, close, (241, 148, 138), (245, 183, 177))
     exit.add_text("QUIT", 60, "Fonts/arfmoochikncheez.ttf", background)
 
-    mandav = gorunurluk.Button(width - 300, height - 80, 300, 100, None, background)
-    mandav.add_text("MANDAV", 60, "Fonts/arfmoochikncheez.ttf", (41, 41, 41))
+    bbms = gorunurluk.Button(width - 300, height - 80, 300, 100, None, background)
+    bbms.add_text("BBMS", 60, "Fonts/arfmoochikncheez.ttf", (41, 41, 41))
 
     while True:
         for event in pygame.event.get():
@@ -59,13 +58,13 @@ def GAME():
                     start_game(map)
 
         display.fill(background)
-
         start.draw()
         exit.draw()
         welcome.draw()
-        mandav.draw()
-
+        bbms.draw()
         pygame.display.update()
+        
+        # Döngünün 60 FPS hızında çalışmasını sağlar
+        #clock.tick(120)
         clock.tick(60)
-
 GAME()
